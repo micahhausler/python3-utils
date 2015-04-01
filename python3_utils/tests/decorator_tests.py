@@ -1,7 +1,7 @@
 import uuid
-from unittest import TestCase
+from unittest import TestCase, skipIf
 
-from mock import patch
+import six
 
 from python3_utils.decorators import compare_on_attr
 
@@ -29,7 +29,7 @@ class MockModelCount(object):
         self.count = count
 
 
-@patch('python3_utils.decorators.six')
+@skipIf(six.PY2, 'Only run on PY3')
 class CompareTests(TestCase):
 
     def setUp(self):
@@ -38,30 +38,22 @@ class CompareTests(TestCase):
 
         super(CompareTests, self).setUp()
 
-    def test_lt(self, mock_six):
-        mock_six.PY3 = True
-
+    def test_lt(self):
         self.assertTrue(
             self.model1 < self.model2
         )
 
-    def test_gt(self, mock_six):
-        mock_six.PY3 = True
-
+    def test_gt(self):
         self.assertTrue(
             self.model2 > self.model1
         )
 
-    def test_eq(self, mock_six):
-        mock_six.PY3 = True
-
+    def test_eq(self):
         self.assertTrue(
             self.model1 == MockModel(1)
         )
 
-    def test_le(self, mock_six):
-        mock_six.PY3 = True
-
+    def test_le(self):
         self.assertTrue(
             self.model1 <= MockModel(1)
         )
@@ -70,9 +62,7 @@ class CompareTests(TestCase):
             self.model1 <= self.model2
         )
 
-    def test_ge(self, mock_six):
-        mock_six.PY3 = True
-
+    def test_ge(self):
         self.assertTrue(
             self.model2 >= self.model1
         )
@@ -80,16 +70,21 @@ class CompareTests(TestCase):
             self.model2 >= MockModel(2)
         )
 
-    def test_ne(self, mock_six):
-        mock_six.PY3 = True
-
+    def test_ne(self):
         self.assertTrue(
             self.model2 != self.model1
         )
 
-    def test_different_attr(self, mock_six):
-        mock_six.PY3 = True
-
+    def test_different_attr(self):
         self.assertTrue(
             MockModelCount(2) >= MockModelCount(1)
+        )
+
+    def test_not_decorating_class(self):
+        @compare_on_attr(attr='count')
+        def myFunc(one):
+            return one
+
+        self.assertFalse(
+            hasattr(myFunc, 'count')
         )
