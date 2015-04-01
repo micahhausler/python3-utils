@@ -6,7 +6,12 @@ class compare_on_attr(object):
     """
     A decorator for comparing class attributes. By default, the decorator
     searches for an 'id' attribute on your class, but other attributes can be
-    specified.
+    specified. The original use for this decorator is to compare Django models
+    in Pandas DataFrames.
+
+    This decorator assumes the class you are decorating has the appropriate
+    attribute, and will raise an error when comparing a class without the
+    correct attribute.
 
     Usage:
 
@@ -40,7 +45,7 @@ class compare_on_attr(object):
             return self.decorate_class(func)
 
     def decorate_class(self, cls):
-        if hasattr(cls, self.attr) and six.PY3:
+        if six.PY3:
             def lt(this, other):
                 return getattr(this, self.attr) < getattr(other, self.attr)
             cls.__lt__ = lt
