@@ -39,17 +39,8 @@ class compare_on_attr(object):
         if inspect.isclass(func):
             return self.decorate_class(func)
 
-    def __enter__(self):
-        pass
-
-    def __exit__(self, *args):
-        pass
-
     def decorate_class(self, cls):
-        if not hasattr(cls, self.attr):
-            return
-
-        if six.PY3:
+        if hasattr(cls, self.attr) and six.PY3:
             def lt(this, other):
                 return getattr(this, self.attr) < getattr(other, self.attr)
             cls.__lt__ = lt
