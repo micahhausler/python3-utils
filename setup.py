@@ -37,7 +37,7 @@ extras_require['all'] = list(everything)
 setup(
     name='python3-utils',
     version=get_version(),
-    description='',
+    description='Useful collection of python3 utilities',
     long_description=open('README.rst').read(),
     url='https://github.com/micahhausler/python3-utils',
     author='Micah Hausler',
