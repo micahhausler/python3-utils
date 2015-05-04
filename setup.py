@@ -23,13 +23,17 @@ tests_require = [
     'nose>=1.3.0',
 ]
 
+install_requires = [
+    'six>=1.8.0'
+]
+
 extras_require = {
     'test': tests_require,
     'packaging': ['wheel'],
     'docs': ['Sphinx>=1.2.2', 'sphinx_rtd_theme'],
 }
 
-everything = set()
+everything = set(install_requires)
 for deps in extras_require.values():
     everything.update(deps)
 extras_require['all'] = list(everything)
@@ -53,9 +57,7 @@ setup(
         'Operating System :: OS Independent',
     ],
     license='MIT',
-    install_requires=[
-        'six>=1.8.0'
-    ],
+    install_requires=install_requires,
     include_package_data=True,
     test_suite='nose.collector',
     tests_require=tests_require,

@@ -10,7 +10,7 @@ class MockObject(object):
     id = None
 
     def __init__(self, id=None):
-        self.id = id or uuid.uuid4()
+        self.id = id or uuid.uuid4()  # pragma: no cover
 
 
 @compare_on_attr()
@@ -53,6 +53,11 @@ class CompareTests(TestCase):
             self.model1 == MockModel(1)
         )
 
+    def test_eq_no_attr(self):
+        self.assertFalse(
+            MockModelCount(2) == MockModel(2)
+        )
+
     def test_le(self):
         self.assertTrue(
             self.model1 <= MockModel(1)
@@ -75,6 +80,11 @@ class CompareTests(TestCase):
             self.model2 != self.model1
         )
 
+    def test_ne_no_attr(self):
+        self.assertTrue(
+            MockModelCount(1) != self.model1
+        )
+
     def test_different_attr(self):
         self.assertTrue(
             MockModelCount(2) >= MockModelCount(1)
@@ -83,7 +93,7 @@ class CompareTests(TestCase):
     def test_not_decorating_class(self):
         @compare_on_attr(attr='count')
         def myFunc(one):
-            return one
+            return one  # pragma: no cover
 
         self.assertFalse(
             hasattr(myFunc, 'count')
