@@ -55,6 +55,8 @@ class compare_on_attr(object):
             cls.__gt__ = gt
 
             def eq(this, other):
+                if not hasattr(other, self.attr):
+                    return False
                 return getattr(this, self.attr) == getattr(other, self.attr)
             cls.__eq__ = eq
 
@@ -67,6 +69,8 @@ class compare_on_attr(object):
             cls.__ge__ = ge
 
             def ne(this, other):
+                if not hasattr(other, self.attr):
+                    return True
                 return getattr(this, self.attr) != getattr(other, self.attr)
             cls.__ne__ = ne
         return cls
