@@ -4,11 +4,11 @@
 .. image:: https://coveralls.io/repos/micahhausler/python3-utils/badge.png?branch=master
     :target: https://coveralls.io/r/micahhausler/python3-utils?branch=master
 
-.. image:: https://pypip.in/v/python3-utils/badge.png
+.. image:: https://img.shields.io/pypi/v/python3-utils.svg
     :target: https://pypi.python.org/pypi/python3-utils/
     :alt: Latest PyPI version
 
-.. image:: https://pypip.in/d/python3-utils/badge.png
+.. image:: https://img.shields.io/pypi/dm/python3-utils.svg
     :target: https://pypi.python.org/pypi/python3-utils/
     :alt: Number of PyPI downloads
 
